@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  cpp-algos:
+    build: ./cpp-algos
+    ports:
+      - "8080:8080"
+    networks:
+      - investor-net
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cpp-algos
+    networks:
+      - investor-net
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - investor-net
+
+  # Optionally, add a database service if needed later
+  # database:
+  #   image: postgres:13
+  #   environment:
+  #     POSTGRES_USER: youruser
+  #     POSTGRES_PASSWORD: yourpassword
+  #     POSTGRES_DB: investordb
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   networks:
+  #     - investor-net
+
+networks:
+  investor-net:
+
+# volumes:
+#   pgdata:
